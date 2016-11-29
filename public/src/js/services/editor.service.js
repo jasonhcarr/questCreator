@@ -163,7 +163,7 @@ angular.module('questCreator').service('EditorService', function (UserService, $
       });
     }
 
-    function createBackground(name, game_id, info) {
+    function createBackground(name, game_id, info, thumbnail) {
       var headerData = {
         user_id: UserService.get().id,
         token: UserService.get().token
@@ -173,13 +173,13 @@ angular.module('questCreator').service('EditorService', function (UserService, $
         collisionMap: []
       };
       var currentBackground = {
+        thumbnail: thumbnail || null,
         name: name,
         info: backgroundInfo,
         tags: [],
         published: true,
         game_id: game_id
       };
-      console.log(currentBackground);
       return $.ajax({
         method: 'POST',
         url: 'https://forge-api.herokuapp.com/backgrounds/create',
@@ -188,7 +188,6 @@ angular.module('questCreator').service('EditorService', function (UserService, $
         dataType: 'json',
         contentType: 'application/json',
         success: function(response) {
-          console.log(response);
           return response;
         },
         error: function(error) {
